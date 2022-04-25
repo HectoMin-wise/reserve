@@ -13,7 +13,9 @@ public class MemberQueryImpl implements MemberQuery{
 
     @Override
     public String getMemberList() {
-        return null;
+        return "SELECT member_idx, id, pw, nickname,"
+                +" name, phone_number, join_date, leave_date, member_state\r\n" +
+                " FROM member";
     }
 
     @Override

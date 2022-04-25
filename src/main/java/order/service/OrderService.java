@@ -9,5 +9,5 @@ public interface OrderService {
     void reserve(Member member) throws SQLException;
     void cancle(Order order) throws SQLException;
 
-    Member strat() throws SQLException;
+    Member start() throws SQLException;
 }

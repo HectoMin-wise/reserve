@@ -21,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
     private DBConnection dbConnection = new Ojdbc();
     private Connection conn;
 
-    public Member strat() throws SQLException {
+    public Member start() throws SQLException {
         Scanner sc = new Scanner(System.in);
         System.out.println("아이디 : ");
         String id = sc.nextLine();

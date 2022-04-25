@@ -57,4 +57,9 @@ public class MenuImpl implements Menu{
     public StringBuilder showLoginForm() {
         return null;
     }
+
+    @Override
+    public StringBuilder showMemberList() {
+        return null;
+    }
 }

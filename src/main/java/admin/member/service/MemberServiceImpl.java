@@ -5,7 +5,6 @@ import admin.member.dao.MemberDaoImpl;
 import admin.member.dto.MemberDto;
 import admin.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

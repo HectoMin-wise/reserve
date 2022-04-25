@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
     int seq =1;
 
     private DBConnection dbConnection = new Ojdbc();
-    private Connection conn = dbConnection.getConnection();
+    private Connection conn;
 
     public Member strat() throws SQLException {
         Scanner sc = new Scanner(System.in);
@@ -28,15 +28,18 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("비밀번호 :");
         String pw = sc.nextLine();
 
-        System.out.println("예약 : 1 | 취소 : 2 | 끝내기 : 3");
 
-        int choice = sc.nextInt();
-        if (choice==1){
-            reserve(member);
-        }else if(choice == 2){
-            cancle(order);
-        }else {
-            sc.close();
+        while (true) {
+            System.out.println("예약 : 1 | 취소 : 2 | 끝내기 : 3");
+            int choice = sc.nextInt();
+
+            if (choice == 1) {
+                reserve(member);
+            } else if (choice == 2) {
+                cancle(order);
+            } else {
+                break;
+            }
         }
         return new Member(seq++,id, pw);
     }
@@ -62,23 +65,21 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("연결성공");
 
 
-            String sql = "insert INTO order_r VALUES(NOTICE_IDX_SEQ.NEXTVAL,?,?,?,?)";
+            String sql = "insert INTO order_r VALUES("+"ORDER_R_IDX_SEQ.NEXTVAL"+",?,?,?,?)";
 //            System.out.println(member.getMember_idx()+" "+ member.getId());
-
+            conn = dbConnection.getConnection();
             pstmt =conn.prepareStatement(sql);
-
 //            pstmt.setInt(1,order.getOrder_idx());
             pstmt.setString(1,order.getOrder_date());
             pstmt.setString(2,order.getOrder_date());
             pstmt.setInt(3,1);
             pstmt.setInt(4,order.getOrder_price());
 
-            boolean result = pstmt.execute();
-//            pstmt.executeUpdate();
-            System.out.println("Result : "+result);
+//            boolean result = pstmt.execute();
+            pstmt.executeUpdate();
+//            System.out.println("Result : "+result);
             conn.close();
             pstmt.close();
-            strat();
         } catch (SQLException e) {
             System.out.println("DB 연결 실패 무언가 잘못됬다.. 드라이버 연결 정보 오류");
             e.printStackTrace();
@@ -96,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
     public void cancle(Order order) throws SQLException {
         PreparedStatement pstmt = null;
         try {
+            conn = dbConnection.getConnection();
 
             System.out.println("연결성공");
             Scanner sc = new Scanner(System.in);
@@ -111,7 +113,6 @@ public class OrderServiceImpl implements OrderService {
 
             conn.close();
             pstmt.close();
-            strat();
 
         } catch (SQLException e) {
             System.out.println("DB 연결 실패 무언가 잘못됬다.. 드라이버 연결 정보 오류");

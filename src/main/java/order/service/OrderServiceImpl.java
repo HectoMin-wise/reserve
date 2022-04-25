@@ -60,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order(0,order_date,"0","0",order_price);
         
         PreparedStatement pstmt = null;
+        conn = dbConnection.getConnection();
         try {
 
             System.out.println("연결성공");
@@ -67,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
 
             String sql = "insert INTO order_r VALUES("+"ORDER_R_IDX_SEQ.NEXTVAL"+",?,?,?,?)";
 //            System.out.println(member.getMember_idx()+" "+ member.getId());
-            conn = dbConnection.getConnection();
+
             pstmt =conn.prepareStatement(sql);
 //            pstmt.setInt(1,order.getOrder_idx());
             pstmt.setString(1,order.getOrder_date());
@@ -77,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
 
 //            boolean result = pstmt.execute();
             pstmt.executeUpdate();
+            System.out.printf(order.getOrder_date());
 //            System.out.println("Result : "+result);
             conn.close();
             pstmt.close();
@@ -102,12 +104,13 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("연결성공");
             Scanner sc = new Scanner(System.in);
             System.out.println("없애고 싶은 번호");
-            int del_num = sc.nextInt();
+
             String sql = "delete from order_r where order_idx=?";
 //            System.out.println(member.getMember_idx()+" "+ member.getId());
             pstmt =conn.prepareStatement(sql);
 
-            pstmt.setInt(1,del_num);
+            int del_num = sc.nextInt();
+            pstmt.setLong(1,del_num);
 
             pstmt.executeUpdate();
 

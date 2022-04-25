@@ -48,7 +48,7 @@ class ServerAction extends Thread {
 
                 switch (line) {
                     case "1":
-                        memberController.RecieveData(br, pw, line);
+                        memberController.joinMember(br, line);
                         System.out.println("누군가의 가입!");
                         break;
                     case "2":
@@ -111,13 +111,4 @@ class ServerAction extends Thread {
         s2.start();
         s2.join();
     }
-
-
-        //        ActionController actionController;
-//        actionController = new ActionController(line, pwF, pw, DB);
-//        TextSave textSave = new TextSave(actionController);
-//        Thread s1 = new Thread(textSave);
-//        s1.start();
-//        s1.join();
-
 }

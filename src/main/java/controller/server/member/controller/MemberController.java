@@ -27,13 +27,16 @@ public class MemberController {
     private BufferedReader br;
     private int step;
 
+    // TODO: 2022-04-25 show*도 따로 빼줄것!
+
+//    view 만 구현해준다.
     public void showMainMenu() {
         StringBuilder sb = menu.showBanner().append(menu.showMainMenu());
         sb.append(SETCLIENT);
         pw.println(sb);
         pw.flush();
     }
-
+//    step 에 따라서 단계에 맞는 입력 폼을 전송한다.
     public void showJoinForm(int step) {
         StringBuilder sb = menu.showJoinForm(step);
         if (step != 99) {
@@ -42,36 +45,36 @@ public class MemberController {
         pw.println(sb);
         pw.flush();
     }
+    public void showMemberList(int page){
+//        StringBuilder sb = menu.
+    }
 
-    public void RecieveData(BufferedReader br, PrintWriter pw, String line) throws InterruptedException, SQLException, IOException {
-
-        MemberController memberController;
+//     회원가입 진행
+//    step 에 따라서 MemberJoinController의 메소드 실행
+//    step은 MemberJoinController의 메소드 리턴값으로 정해짐
+    public void joinMember(BufferedReader br, String line) throws IOException {
         int step = Integer.parseInt(line);
-        String data;
-        memberController = new MemberController(pw, br, step);
         MemberJoinController memberJoinController = new MemberJoinController();
         boolean joinSuccess = false;
         System.out.println("반복체크" + joinSuccess);
         while (!joinSuccess) {
-            memberController.showJoinForm(step);
-            data = br.readLine();
+            showJoinForm(step);
+            line = br.readLine();
             switch (step) {
-                case 1:
-                case 4:
-                    step = memberJoinController.join(data);
+                case 1: case 4:
+                    step = memberJoinController.join(line);
                     break;
-                case 2:
-                case 6:
-                    step = memberJoinController.userPasswd(data);
+                case 2: case 6:
+                    step = memberJoinController.userPasswd(line);
                     break;
                 case 3:
-                    step = memberJoinController.memberPasswdSameCheck(data);
+                    step = memberJoinController.memberPasswdSameCheck(line);
                     if (step != 99) {
                         break;
                     }
                 case 99:
                     memberService.insertMember(memberJoinController.getMember());
-                    memberController.showJoinForm(step);
+                    showJoinForm(step);
                     joinSuccess = !joinSuccess;
                     System.out.println(step + " " + joinSuccess);
                     break;
@@ -80,4 +83,9 @@ public class MemberController {
             }
         }
     }
+    public void getMemberList(BufferedReader br, String line){
+        memberService.getMemberList(0);
+    }
+
+
 }

@@ -5,4 +5,5 @@ public interface Menu {
     StringBuilder showMainMenu();
     StringBuilder showJoinForm(int step);
     StringBuilder showLoginForm();
+    StringBuilder showMemberList();
 }

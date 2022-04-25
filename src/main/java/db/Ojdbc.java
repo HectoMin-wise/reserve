@@ -31,7 +31,7 @@ public class Ojdbc implements DBConnection {
             conn = DriverManager.getConnection(url, ID, PASSWORD);
 
             logger.info("DB Connect Success");
-            logger.info("DB Connect Info : {}",url);
+            logger.info("DB Connect Info -> {}",url);
 
 
         } catch(ClassNotFoundException | SQLException e) {

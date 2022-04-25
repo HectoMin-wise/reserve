@@ -1,11 +1,13 @@
 package admin.member.dao;
 
+import admin.member.MemberState;
+import admin.member.dto.MemberDto;
 import admin.member.entity.Member;
 import admin.member.querycontroller.QueryController;
 
 import java.util.List;
 
-public class MemberDaoImpl implements MemberDao{
+public class MemberDaoImpl implements MemberDao {
 
     private QueryController qc = new QueryController();
 
@@ -15,29 +17,27 @@ public class MemberDaoImpl implements MemberDao{
     }
 
     @Override
-    public List<Member> getMemberList(int page) {
+    public List<MemberDto> getMemberList(int page) {
         return qc.selectMemberList(page);
     }
 
     @Override
-    public Member getMember(int member_idx) {
-        return qc.selectMember(member_idx);
+    public MemberDto getMember(int memberIdx) {
+        return qc.selectMember(memberIdx);
     }
 
     @Override
-    public void delMember(int member_idx) {
-
+    public void deleteMember(int memberIdx) {
+        qc.updateMemberState(memberIdx, MemberState.OUT.getStateCode());
     }
 
     @Override
-    public void suspensionMember(int member_idx) {
-
+    public void suspensionMember(int memberIdx) {
+        qc.updateMemberState(memberIdx, MemberState.BLOCK.getStateCode());
     }
 
-    public static void main(String[] args) {
-        MemberDaoImpl memberDao = new MemberDaoImpl();
-
-        System.out.println(memberDao.getMember(0).toString());
-
+    @Override
+    public void comebackMember(int memberIdx) {
+        qc.updateMemberState(memberIdx, MemberState.USING.getStateCode());
     }
 }

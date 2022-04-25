@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface MemberService {
     List<Member> getMemberList(int page);
-    Member getMember(int member_idx);
-    void delMember(int member_idx);
-    void hideMember(int member_idx);
+    Member getMember(int memberIdx);
+    void delMember(int memberIdx);
+    void hideMember(int memberIdx);
+    String getMemberListString();
+    String getMemberString(int memberIdx);
 }

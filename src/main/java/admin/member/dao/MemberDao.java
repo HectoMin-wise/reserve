@@ -1,5 +1,6 @@
 package admin.member.dao;
 
+import admin.member.dto.MemberDto;
 import admin.member.entity.Member;
 
 import java.util.List;
@@ -7,11 +8,13 @@ import java.util.List;
 public interface MemberDao {
     Long insertMember(Member member);
 
-    List<Member> getMemberList(int page);
+    List<MemberDto> getMemberList(int page);
 
-    Member getMember(int member_idx);
+    MemberDto getMember(int memberIdx);
 
-    void delMember(int member_idx);
+    void deleteMember(int memberIdx);
 
-    void suspensionMember(int member_idx);
+    void suspensionMember(int memberIdx);
+
+    void comebackMember(int memberIdx);
 }

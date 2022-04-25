@@ -16,6 +16,8 @@ dependencies {
     implementation group: 'com.oracle.database.jdbc', name: 'ojdbc6', version: '11.2.0.4'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+
 }
 
 test {

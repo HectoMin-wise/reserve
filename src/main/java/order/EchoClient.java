@@ -1,8 +1,8 @@
-package client;
+package order;
 
+import order.service.OrderServiceImpl;
 import vo.Member;
-import server.Pratice;
-import server.PraticeImpl;
+import order.service.OrderService;
 
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -16,7 +16,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 /*
 클라이언트는 서버보다 훨씬 단순하다
@@ -50,9 +49,9 @@ public class EchoClient {
         BufferedReader br = new BufferedReader(inR);
 
 
-        Pratice pratice = new PraticeImpl();
+        OrderService orderService = new OrderServiceImpl();
 
-        Member member = pratice.strat();
+        Member member = orderService.strat();
 
 
 

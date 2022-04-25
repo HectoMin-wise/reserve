@@ -1,7 +1,7 @@
-package server;
+package order.service;
 
+import order.entity.Order;
 import vo.Member;
-import vo.Order;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,11 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class PraticeImpl implements Pratice {
+public class OrderServiceImpl implements OrderService {
 
     public  Member member;
-    public  Order order;
+    public Order order;
     int seq =1;
+
+
     public Member strat() throws SQLException {
         Scanner sc = new Scanner(System.in);
         System.out.println("아이디 : ");
@@ -44,7 +46,8 @@ public class PraticeImpl implements Pratice {
         System.out.println("가격을 적어주세요");
         int order_price = sc.nextInt();
 
-        Order order = new Order(member.getMember_idx(),order_date,order_price);
+//        OrderService order = new OrderService(member.getMember_idx(),order_date,order_price);
+        Order order = new Order(member.getMember_idx(),order_date,"0","0",order_price);
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -81,6 +84,7 @@ public class PraticeImpl implements Pratice {
         pstmt.close();
 
     }
+
 
     @Override
     public void cancle(Order order) throws SQLException {

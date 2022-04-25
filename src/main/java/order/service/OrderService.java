@@ -1,11 +1,11 @@
-package server;
+package order.service;
 
+import order.entity.Order;
 import vo.Member;
-import vo.Order;
 
 import java.sql.SQLException;
 
-public interface Pratice {
+public interface OrderService {
     void reserve(Member member) throws SQLException;
     void cancle(Order order) throws SQLException;
 

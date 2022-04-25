@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class QueryController {
-    public ResultSet selectNotice(Connection conn, int notice_idx) throws SQLException {
+    public ResultSet selectNotice(Connection conn, int order_idx) throws SQLException {
 
-        String query = "SELECT notice_idx FROM notice WHERE notice_idx = ?";
+        String query = "SELECT order_idx FROM order_r WHERE order_idx = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setInt(0, notice_idx);
+        stmt.setInt(1, order_idx);
 
         return stmt.executeQuery();
     }

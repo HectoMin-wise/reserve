@@ -28,24 +28,23 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrderList(int page) {
-        List<Order> orderList = new ArrayList<>();
+//        List<Order> orderList = new ArrayList<>();
+//
+//        try {
+//            String query = "SELECT order_idx FROM order_r";
+//            PreparedStatement stmt = conn.prepareStatement(query);
+//            ResultSet rs = stmt.executeQuery();
+//
+//            while (rs.next()) {
+//                Order order = new Order();
+//                order.setOrder_idx(rs.getInt("order_idx"));
+//                orderList.add(order);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            String query = "SELECT order_idx FROM notice";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Order order = new Order();
-
-                order.setOrder_idx(rs.getInt("notice_idx"));
-                orderList.add(order);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return orderList;
+        return null;
     }
 
     @Override

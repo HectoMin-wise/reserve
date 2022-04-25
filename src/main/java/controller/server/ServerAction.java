@@ -1,5 +1,7 @@
 package controller.server;
 
+import controller.server.member.controller.MemberController;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -31,8 +33,9 @@ class ServerAction extends Thread {
             BufferedReader br = new BufferedReader(inR);
 
             ActionController actionController;
-
+            MemberController memberController = new MemberController(pw,0);
             while (true) {
+                memberController.showMainMenu();
                 // 클라이언트가 보내온 전체 패킷을 수신
                 String line = br.readLine();
                 if (false) {

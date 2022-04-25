@@ -2,34 +2,36 @@ package controller.server.member.controller;
 
 import controller.server.member.entity.Member;
 import controller.server.member.service.MemberServiceImpl;
+import controller.server.member.view.MenuImpl;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberController {
-    static public MemberServiceImpl memberService = new MemberServiceImpl();
+    static private final String SETCLIENT = "\n"+"DATA_SET";
+    static private MemberServiceImpl memberService = new MemberServiceImpl();
+    static private MenuImpl menu = new MenuImpl();
 
-    // TODO: 2022-04-25 삭제 필 테스트용 메인 함수
-    public static void main(String[] args) {
-        Member member = new Member();
-//        member.setMemberIdx();
-        member.setMemberState(1L);
-        member.setId("testMemberId");
-        member.setNickname("king왕짱");
-//        member.setJoinDate("");
-//        member.setLeaveDate();
-        member.setName("김성민");
-        member.setPw("1q2w3e4r!");
-        member.setPhoneNumber("010-5098-2039");
-//        Boolean i = memberService.insertMember(member);
-//        System.out.println(i+"삽입 완료");
-        List<Member> memberList;
-        memberList = memberService.getMemberList(0);
-        for (Member member1: memberList) {
-            System.out.println(member1);
-        }
-        for (int i = 0; i < memberList.size(); i++) {
-            System.out.println(memberList.get(i));
-        }
+    private PrintWriter pw;
+    private int step;
+
+
+    public void showMainMenu(){
+        StringBuilder sb = menu.showBanner().append(menu.showMainMenu());
+        sb.append(SETCLIENT);
+        pw.println(sb);
+        pw.flush();
+    }
+    public void showJoinForm(int step){
+        StringBuilder sb = menu.showJoinForm(step);
+        pw.println(sb);
+        pw.flush();
     }
 }

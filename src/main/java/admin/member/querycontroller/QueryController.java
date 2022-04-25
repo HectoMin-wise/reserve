@@ -51,11 +51,13 @@ public class QueryController {
 
             conn = dbConnection.getConnection();
             stmt = conn.prepareStatement(query);
-            stmt.setInt(0, member_idx);
+            stmt.setInt(1, member_idx);
 
             rs = stmt.executeQuery();
 
-            member.setMember_idx(rs.getLong("member_idx"));
+            if (rs.next()) {
+                member.setMember_idx(rs.getLong("member_idx"));
+            }
 
             this.closeAll();
         } catch (SQLException e) {

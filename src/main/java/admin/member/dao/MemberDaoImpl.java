@@ -33,4 +33,11 @@ public class MemberDaoImpl implements MemberDao{
     public void suspensionMember(int member_idx) {
 
     }
+
+    public static void main(String[] args) {
+        MemberDaoImpl memberDao = new MemberDaoImpl();
+
+        System.out.println(memberDao.getMember(0).toString());
+
+    }
 }

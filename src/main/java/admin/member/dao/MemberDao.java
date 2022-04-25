@@ -14,7 +14,8 @@ public interface MemberDao {
 
     void deleteMember(int memberIdx);
 
-    void suspensionMember(int memberIdx);
+    void blockMember(int memberIdx);
 
-    void comebackMember(int memberIdx);
+    void usingMember(int memberIdx);
+    void outMember(int memberIdx);
 }

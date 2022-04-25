@@ -3,7 +3,9 @@ package admin.member;
 public enum MemberState {
     USING("이용중", 1),
     BLOCK("이용정지", 0),
-    OUT("탈퇴", 2);
+    OUT("탈퇴", 2),
+    DELETE("삭제", 3);
+
 
     private String stateName;
     private int stateCode;

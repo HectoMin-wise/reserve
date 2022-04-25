@@ -28,16 +28,23 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public void deleteMember(int memberIdx) {
-        qc.updateMemberState(memberIdx, MemberState.OUT.getStateCode());
+        qc.updateMemberState(memberIdx, MemberState.DELETE.getStateCode());
     }
 
     @Override
-    public void suspensionMember(int memberIdx) {
+    public void blockMember(int memberIdx) {
         qc.updateMemberState(memberIdx, MemberState.BLOCK.getStateCode());
     }
 
     @Override
-    public void comebackMember(int memberIdx) {
+    public void usingMember(int memberIdx) {
         qc.updateMemberState(memberIdx, MemberState.USING.getStateCode());
     }
+
+    @Override
+    public void outMember(int memberIdx) {
+        qc.updateMemberState(memberIdx, MemberState.OUT.getStateCode());
+    }
+
+
 }

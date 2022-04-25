@@ -1,6 +1,7 @@
 package controller.server;
 
 import controller.server.member.controller.MemberController;
+import controller.server.member.controller.MemberJoinController;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -33,7 +34,8 @@ class ServerAction extends Thread {
             BufferedReader br = new BufferedReader(inR);
 
             ActionController actionController;
-            MemberController memberController = new MemberController(pw,0);
+            MemberController memberController = new MemberController(pw,br,0);
+
             while (true) {
                 memberController.showMainMenu();
                 // 클라이언트가 보내온 전체 패킷을 수신
@@ -42,22 +44,23 @@ class ServerAction extends Thread {
                     System.out.println("Disconnect Client");
                     break;
                 }
-                System.out.println("Received Data : " + line);
+                System.out.println("Received Data : " + line +" "+line.equals("1"));
 
-                switch (line.split(" ")[0]) {
-                    case "DATA":
-                        RecieveData(pwF, pw, line);
+                switch (line) {
+                    case "1":
+                        memberController.RecieveData(br, pw, line);
+                        System.out.println("누군가의 가입!");
                         break;
-                    case "LIST":
+                    case "2":
                         SendMemberList(pw, line);
                         break;
-                    case "DELETE":
+                    case "3":
                         DeleteMember(pwF, pw, line);
                         break;
-                    case "UPDATE":
+                    case "4":
                         LoginMemberForUpdate(pwF, pw, line);
                         break;
-                    case "UPDATEDO":
+                    case "5":
                         UpdateMemberPw(pwF, pw, line);
                     case "EXIT":
                         break;
@@ -109,12 +112,12 @@ class ServerAction extends Thread {
         s2.join();
     }
 
-    private void RecieveData(PrintWriter pwF, PrintWriter pw, String line) throws InterruptedException, SQLException {
-        ActionController actionController;
-        actionController = new ActionController(line, pwF, pw, DB);
-        TextSave textSave = new TextSave(actionController);
-        Thread s1 = new Thread(textSave);
-        s1.start();
-        s1.join();
-    }
+
+        //        ActionController actionController;
+//        actionController = new ActionController(line, pwF, pw, DB);
+//        TextSave textSave = new TextSave(actionController);
+//        Thread s1 = new Thread(textSave);
+//        s1.start();
+//        s1.join();
+
 }

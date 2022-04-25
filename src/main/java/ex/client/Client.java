@@ -26,10 +26,10 @@ public class Client {
             if (dataSend.equals("EXIT")){
                 break;
             }
-            if (dataSend.equals("DATA_SET")){
-                System.out.println("데이터 준비");
+            if (dataSend.equals("DATA_SET")) {
+//                System.out.println("데이터 준비");
                 String sendData = sc.nextLine();
-                System.out.println(sendData);
+//                System.out.println(sendData);
                 pw.println(sendData);
                 pw.flush();
             }

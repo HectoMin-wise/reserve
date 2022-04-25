@@ -33,6 +33,22 @@ public class MenuImpl implements Menu{
             case 2:
                 sb.append("비밀번호를 입력주세요");
                 return sb;
+            case 3:
+                sb.append("비밀번호를 다시 입력해주세요");
+                return sb;
+            case 4:
+                sb.append("아이디를 다시 입력해 주세요");
+                return sb;
+            case 5:
+                sb.append("처음 입력한 비밀번호와 다릅니다.!");
+                return sb;
+            case 6:
+                sb.append("올바르지 비밀번호 형식입니다.!!\n");
+                sb.append("비밀번호를 다시 입력해주세요");
+                return sb;
+            case 99:
+                sb.append("회원가입이 성공적으로 완료되었습니다.!");
+                return sb;
         }
         return sb;
     }

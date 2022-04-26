@@ -27,15 +27,7 @@ public class MemberController {
     private BufferedReader br;
     private int step;
 
-    // TODO: 2022-04-25 show*도 따로 빼줄것!
 
-//    view 만 구현해준다.
-    public void showMainMenu() {
-        StringBuilder sb = menu.showBanner().append(menu.showMainMenu());
-        sb.append(SETCLIENT);
-        pw.println(sb);
-        pw.flush();
-    }
 //    step 에 따라서 단계에 맞는 입력 폼을 전송한다.
     public void showJoinForm(int step) {
         StringBuilder sb = menu.showJoinForm(step);
@@ -45,8 +37,51 @@ public class MemberController {
         pw.println(sb);
         pw.flush();
     }
-    public void showMemberList(int page){
-//        StringBuilder sb = menu.
+    public void showLoginForm(int step){
+        StringBuilder sb = menu.showLoginForm(step);
+        if (step == 99 || step ==404) {
+        }else {
+            sb.append(SETCLIENT);
+        }
+        pw.println(sb);
+        pw.flush();
+    }
+
+    public Member loginMember(BufferedReader br, String line) throws  IOException{
+        Member member = new Member();
+        int step = 1;
+        boolean loginSuccess = false;
+        while (!loginSuccess) {
+            showLoginForm(step);
+            line = br.readLine();
+            if(line.equals("exit")) {
+                showLoginForm(100);
+                loginSuccess=true;
+            }
+            switch (step) {
+                case 1:
+                    step++;
+                    member.setId(line);
+                    break;
+                case 2:
+                    step--;
+                    member.setPw(line);
+                    try {
+                        loginSuccess = memberService.getMember(member).getId().equals(member.getId()) ? true : false;
+                    }catch (Exception e)
+                    {
+                        loginSuccess=false;
+                        showLoginForm(404);
+                    }
+                    if (loginSuccess)
+                    {
+                        step=99;
+                        showLoginForm(step);
+                        return member;
+                    }
+            }
+        }
+        return member;
     }
 
 //     회원가입 진행
@@ -84,8 +119,14 @@ public class MemberController {
         }
     }
     public void getMemberList(BufferedReader br, String line){
-        memberService.getMemberList(0);
+        List<Member> memberList = memberService.getMemberList(0);
+        StringBuilder sb = new StringBuilder();
+        for (Member member: memberList) {
+            sb = menu.showMemberList(member);
+            pw.println(sb);
+            pw.flush();
+        }
+        pw.println(SETCLIENT);
+        pw.flush();
     }
-
-
 }

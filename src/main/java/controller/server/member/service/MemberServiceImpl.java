@@ -16,6 +16,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Member getMember(Member member) {
+        System.out.println(dao.getMember(member)+" "+member);
         return dao.getMember(member);
     }
 

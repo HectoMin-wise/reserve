@@ -46,7 +46,7 @@ public class MemberDaoImpl implements MemberDao{
                 member.setJoinDate(rs.getDate(7));
                 member.setLeaveDate(rs.getDate(8));
                 member.setMemberState(rs.getLong(9));
-                System.out.println(member);
+//                System.out.println(member);
                 memberList.add(member);
             }
 
@@ -58,7 +58,18 @@ public class MemberDaoImpl implements MemberDao{
 
     @Override
     public Member getMember(Member member) {
-        return null;
+        Member member1 = new Member();
+        Statement statement = null;
+        try {
+            statement = dbConnection.getCon().createStatement();
+            ResultSet rs = statement.executeQuery(memberQuery.getMember(member));
+            rs.next();
+            member1.setId(rs.getString(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return member1;
     }
 
     @Override

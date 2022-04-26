@@ -1,8 +1,6 @@
 package admin.member.querycontroller;
 
-import admin.member.MemberState;
 import admin.member.dto.MemberDto;
-import admin.member.entity.Member;
 import db.DBConfig;
 import db.DBConnection;
 
@@ -13,8 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueryController {
-    private DBConnection dbConnection = DBConfig.getDbInstance();
+public class MemberQuery {
+    private final DBConnection dbConnection = DBConfig.getDbInstance();
     private Connection conn;
     private PreparedStatement stmt;
     private ResultSet rs;

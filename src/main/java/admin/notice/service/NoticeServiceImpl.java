@@ -4,7 +4,7 @@ import admin.notice.entity.Notice;
 
 import java.util.List;
 
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
     @Override
     public List<Notice> getNoticeList(int page) {
         return null;
@@ -16,7 +16,7 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public void delNotice(int notice_idx) {
+    public void deleteNotice(int notice_idx) {
 
     }
 

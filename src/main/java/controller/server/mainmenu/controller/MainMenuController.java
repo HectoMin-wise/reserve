@@ -1,6 +1,7 @@
 package controller.server.mainmenu.controller;
 
 import controller.server.mainmenu.view.MenuImpl;
+import controller.server.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,12 @@ public class MainMenuController {
     //    view 만 구현해준다.
     public void showMainMenu() {
         StringBuilder sb = menu.showBanner().append(menu.showMainMenu());
+        sb.append(SETCLIENT);
+        pw.println(sb);
+        pw.flush();
+    }
+    public void showReserveMenu(Member member){
+        StringBuilder sb = menu.showBanner().append(menu.showReserveMenu(member));
         sb.append(SETCLIENT);
         pw.println(sb);
         pw.flush();

@@ -48,7 +48,7 @@ class ServerAction extends Thread {
                             mainMenuController.showReserveMenuIn(member);
                             break;
                         case "2":
-                            mainMenuController.showHouseMenu();
+                            mainMenuController.showHouseMenu(member);
                             break;
                         case "3":
                             member.setId(IDKEY);

@@ -1,4 +1,4 @@
-package controller.server.member.view;
+package controller.server.mainmenu.controller.view;
 
 import controller.server.member.entity.Member;
 

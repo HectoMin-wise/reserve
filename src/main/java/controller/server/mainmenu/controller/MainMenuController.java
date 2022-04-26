@@ -39,6 +39,8 @@ public class MainMenuController {
         pw.flush();
     }
     public void showReserveMenuIn(Member member) throws IOException {
+        orderController.setPw(pw);
+        orderController.setBr(br);
         orderController.setMember(member);
         StringBuilder sb = new StringBuilder();
         boolean exit = false;
@@ -52,20 +54,18 @@ public class MainMenuController {
 //            TODO 내부 이동작동 붙혀주기
             switch (line){
                 case "1":
-                    System.out.println("예약목록");
+                   orderController.reserveList();
                     break;
                 case "2":
-                    orderController.reserveList();
+                    orderController.reserveDelete();
                     break;
             }
-            line = br.readLine();
-
             if (line.equals("3")){
                 exit = true;
             }
         }
     }
-    public void showHouseMenu() throws IOException {
+    public void showHouseMenu(Member member) throws IOException {
         orderController.setPw(pw);
         orderController.setBr(br);
         StringBuilder sb = new StringBuilder();
@@ -81,7 +81,7 @@ public class MainMenuController {
             line = br.readLine();
 
             if (line.equals("3"))
-                 orderController.reserveInsert();
+                 orderController.reserveInsert(member);
             if (line.equals("4")){
                 exit = true;
             }

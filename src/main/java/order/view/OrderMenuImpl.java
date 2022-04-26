@@ -14,7 +14,7 @@ public class OrderMenuImpl implements OrderMenu {
     }
 
     @Override
-    public StringBuilder reseveInsert(int step) {
+    public StringBuilder reserveInsert(int step) {
         StringBuilder sb = new StringBuilder();
         switch (step) {
             case 1:
@@ -23,13 +23,21 @@ public class OrderMenuImpl implements OrderMenu {
             case 2:
                 sb.append("가격을 입력해주세요");
                 return sb;
+            case 3:
+                sb.append("예약이 완료되었습니다.");
+                return sb;
         }
         return sb;
     }
 
 
         @Override
-        public StringBuilder reseveCancle () {
-            return null;
+        public StringBuilder reserveDelete (int step) {
+            StringBuilder sb = new StringBuilder();
+            if (step==1)
+                sb.append("삭제할 예약 번호를 입력해주세요.");
+            if (step==2)
+                sb.append("삭제가 완료 되었습니다.");
+            return sb;
         }
     }

@@ -58,7 +58,6 @@ public class EchoServer {
         BufferedReader br = new BufferedReader(inR);
 
 
-
         // 4) 송수신
         while(true) {
             // 클라이언트가 보내는 데이터를 기다리다가 도착하면 문자열 반환

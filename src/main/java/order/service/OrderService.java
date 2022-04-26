@@ -6,8 +6,12 @@ import vo.Member;
 import java.sql.SQLException;
 
 public interface OrderService {
-    void reserve(Member member) throws SQLException;
-    void cancle(Order order) throws SQLException;
 
-    Member start() throws SQLException;
+    Member memberLogin() throws SQLException;
+    Order orderSave(Member member);
+    Order orderdelete(Order order);
+
+    void orderCheck();
+
+
 }

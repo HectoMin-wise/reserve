@@ -56,6 +56,7 @@ public class MemberController {
             line = br.readLine();
             if(line.equals("exit")) {
                 showLoginForm(100);
+                member.setId("NOTLOGIN");
                 loginSuccess=true;
             }
             switch (step) {

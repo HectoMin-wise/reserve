@@ -1,8 +1,8 @@
 package order;
 
+import controller.server.member.entity.Member;
 import order.entity.Order;
 import order.service.OrderServiceImpl;
-import vo.Member;
 import order.service.OrderService;
 
 import java.net.Socket;

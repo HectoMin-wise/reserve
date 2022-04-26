@@ -7,7 +7,7 @@ public class DBConfig {
 
     public static DBConnection getDbInstance() {
         if (dbConnection == null) {
-            dbConnection = new Ojdbc();
+            dbConnection = new MariaJdbc();
         }
         return dbConnection;
     }

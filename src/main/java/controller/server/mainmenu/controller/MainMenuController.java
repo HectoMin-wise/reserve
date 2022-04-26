@@ -5,6 +5,7 @@ import controller.server.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import order.controller.OrderController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.io.PrintWriter;
 public class MainMenuController {
     static private final String SETCLIENT = "\n" + "DATA_SET";
     static private MenuImpl menu = new MenuImpl();
+    static private OrderController orderController = new OrderController();
 
     private PrintWriter pw;
     private BufferedReader br;
@@ -36,7 +38,8 @@ public class MainMenuController {
         pw.println(sb);
         pw.flush();
     }
-    public void showReserveMenuIn() throws IOException {
+    public void showReserveMenuIn(Member member) throws IOException {
+        orderController.setMember(member);
         StringBuilder sb = new StringBuilder();
         boolean exit = false;
         String line;
@@ -45,8 +48,16 @@ public class MainMenuController {
             sb.append(SETCLIENT);
             pw.println(sb);
             pw.flush();
-
+            line = br.readLine();
 //            TODO 내부 이동작동 붙혀주기
+            switch (line){
+                case "1":
+                    System.out.println("예약목록");
+                    break;
+                case "2":
+                    orderController.reserveList();
+                    break;
+            }
             line = br.readLine();
 
             if (line.equals("3")){
@@ -55,6 +66,8 @@ public class MainMenuController {
         }
     }
     public void showHouseMenu() throws IOException {
+        orderController.setPw(pw);
+        orderController.setBr(br);
         StringBuilder sb = new StringBuilder();
         boolean exit = false;
         String line;
@@ -67,7 +80,9 @@ public class MainMenuController {
 //            TODO 내부 이동작동 붙혀주기
             line = br.readLine();
 
-            if (line.equals("3")){
+            if (line.equals("3"))
+                 orderController.reserveInsert();
+            if (line.equals("4")){
                 exit = true;
             }
         }

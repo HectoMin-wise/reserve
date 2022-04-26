@@ -16,7 +16,6 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Member getMember(Member member) {
-        System.out.println(dao.getMember(member)+" "+member);
         return dao.getMember(member);
     }
 
@@ -27,7 +26,6 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Boolean insertMember(Member member) {
-        System.out.println("호출 체크 서비스"+member);
         return 1==dao.insertMember(member);
     }
 

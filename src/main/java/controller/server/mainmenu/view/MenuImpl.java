@@ -22,7 +22,7 @@ public class MenuImpl implements Menu {
     @Override
     public StringBuilder showHouseMenu() {
         StringBuilder sb = new StringBuilder();
-        sb.append("1번 숙소목록 조회 \n2번 숙소상세\n3번 숙소 예약하기");
+        sb.append("1번 숙소목록 조회 \n2번 숙소상세\n3번 숙소 예약하기\n4번 뒤로가기");
         return sb;
     }
 

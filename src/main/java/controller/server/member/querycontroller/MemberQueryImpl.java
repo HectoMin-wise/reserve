@@ -5,10 +5,10 @@ import controller.server.member.entity.Member;
 public class MemberQueryImpl implements MemberQuery{
     @Override
     public String insertMember(Member member) {
-        return "INSERT INTO member(member_idx, id, pw, nickname," +
+        return "INSERT INTO member( id, pw, nickname," +
                 " name, phone_number, join_date, leave_date, member_state)\r\n"
-                +" VALUES(member_idx_seq.NEXTVAL, '"+member.getId()+"', '"+member.getPw()+"', '"+member.getNickname()+"', '"
-                +member.getName()+"', '"+member.getPhoneNumber()+"', SYSDATE, null, "+member.getMemberState()+")";
+                +" VALUES('"+member.getId()+"', '"+member.getPw()+"', '"+member.getNickname()+"', '"
+                +member.getName()+"', '"+member.getPhoneNumber()+"', SYSDATE(), null, "+member.getMemberState()+")";
     }
 
     @Override

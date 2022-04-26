@@ -11,7 +11,6 @@ import java.net.Socket;
 import java.sql.SQLException;
 
 class ServerAction extends Thread {
-    public static final String DB = "User.txt";
     public static final String IDKEY = "NOTLOGIN";
     private Socket socket;
     private InetAddress inetAddr;
@@ -25,9 +24,6 @@ class ServerAction extends Thread {
     @Override
     public void run() {
         try {
-            OutputStream outfile = new FileOutputStream(DB, true);
-            BufferedOutputStream bFOut = new BufferedOutputStream(outfile);
-            PrintWriter pwF = new PrintWriter(bFOut);
 
             OutputStream out = socket.getOutputStream();
             OutputStreamWriter outW = new OutputStreamWriter(out);
@@ -49,7 +45,7 @@ class ServerAction extends Thread {
 //                    TODO 내부 선택지에 따른 동작 잡아주기
                     switch (line) {
                         case "1":
-                            mainMenuController.showReserveMenuIn();
+                            mainMenuController.showReserveMenuIn(member);
                             break;
                         case "2":
                             mainMenuController.showHouseMenu();

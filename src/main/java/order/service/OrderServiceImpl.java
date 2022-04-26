@@ -1,9 +1,10 @@
 package order.service;
 
+import controller.server.member.entity.Member;
+import db.DBConfig;
 import db.DBConnection;
 import db.Ojdbc;
 import order.entity.Order;
-import vo.Member;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,11 +14,11 @@ import java.util.Scanner;
 
 public class OrderServiceImpl implements OrderService {
 
-    public  Member member;
+    public Member member;
     public Order order;
     int seq =1;
 
-    private DBConnection dbConnection = new Ojdbc();
+    private DBConnection dbConnection = DBConfig.getDbInstance();
     private Connection conn;
 
 
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
             int choice = sc.nextInt();
 
             if (choice == 1) {
-                orderSave(member);
+//                orderSave(member);
             } else if (choice == 2) {
                 orderdelete(order);
             } else if (choice==3){
@@ -52,42 +53,21 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order orderSave(Member member) {
-        Scanner sc = new Scanner(System.in);
+    public Order orderSave(Member member,Order order) {
 
-        System.out.println("예약 날짜를 선택해 주세요");
-        String order_date = sc.nextLine();
-//        String cancle_date = sc.nextLine();
-//        String order_state= sc.nextLine();
-        System.out.println("가격을 적어주세요");
-        int order_price = sc.nextInt();
-
-//        OrderService order = new OrderService(member.getMember_idx(),order_date,order_price);
-        Order order = new Order(0,order_date,"0","0",order_price,1,1);
+        order = new Order(0,order.getOrder_date(),"0","0",order.getOrder_price(),1,1);
 
         PreparedStatement pstmt = null;
         conn = dbConnection.getConnection();
         try {
-
-            System.out.println("연결성공");
-
-
-            String sql = "insert INTO order_r VALUES("+"ORDER_R_IDX_SEQ.NEXTVAL"+",?,?,?,?,?,?)";
-//            System.out.println(member.getMember_idx()+" "+ member.getId());
+            String sql = "INSERT INTO order_r(order_date,order_price) VALUES(?,?)";
 
             pstmt =conn.prepareStatement(sql);
-//            pstmt.setInt(1,order.getOrder_idx());
             pstmt.setString(1,order.getOrder_date());
-            pstmt.setString(2,order.getOrder_date());
-            pstmt.setInt(3,1);
-            pstmt.setInt(4,order.getOrder_price());
-            pstmt.setInt(5,1);
-            pstmt.setInt(6,1);
-
-//            boolean result = pstmt.execute();
+            pstmt.setInt(2,order.getOrder_price());
             pstmt.executeUpdate();
             System.out.printf(order.getOrder_date());
-//            System.out.println("Result : "+result);
+
             conn.close();
             pstmt.close();
         } catch (SQLException e) {
@@ -96,7 +76,6 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             System.out.println("별도의 사유로 연결 실패");
             e.printStackTrace();
-
         }
         return order;
     }
@@ -112,7 +91,6 @@ public class OrderServiceImpl implements OrderService {
             System.out.println("없애고 싶은 번호");
 
             String sql = "delete from order_r where order_idx=?";
-//            System.out.println(member.getMember_idx()+" "+ member.getId());
             pstmt =conn.prepareStatement(sql);
 
             int del_num = sc.nextInt();

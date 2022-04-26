@@ -1,13 +1,13 @@
 package admin.member.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Date;
 
 @Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class MemberDto {
     private String id;

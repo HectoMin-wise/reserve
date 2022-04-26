@@ -1,19 +1,14 @@
 package admin.member.dao;
 
 import admin.member.dto.MemberDto;
-import admin.member.entity.Member;
-import admin.member.querycontroller.QueryController;
+import admin.member.querycontroller.MemberQuery;
 import org.junit.jupiter.api.Test;
 
-import javax.management.Query;
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberDaoImplTest {
 
-    private QueryController qc = new QueryController();
+    private MemberQuery qc = new MemberQuery();
 
     @Test
     void getMemberList() {

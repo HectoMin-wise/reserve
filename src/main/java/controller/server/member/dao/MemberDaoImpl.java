@@ -21,12 +21,14 @@ public class MemberDaoImpl implements MemberDao{
     public Long insertMember(Member member) {
         System.out.println("호출 체크 DAO");
         try {
+            Long aLong;
             con = dbConnection.getConnection();
             Statement statement = con.createStatement();
             System.out.println(memberQuery.insertMember(member));
+            aLong = Long.valueOf(statement.executeUpdate(memberQuery.insertMember(member)));
             statement.close();
             con.close();
-            return Long.valueOf(statement.executeUpdate(memberQuery.insertMember(member)));
+            return aLong;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,6 +78,7 @@ public class MemberDaoImpl implements MemberDao{
             ResultSet rs = statement.executeQuery(memberQuery.getMember(member));
             if (rs.next()) {
                 member1.setId(rs.getString(1));
+                member1.setMemberIdx(rs.getLong(2));
             }
             statement.close();
             con.close();

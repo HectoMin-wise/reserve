@@ -20,7 +20,7 @@ public class MemberQueryImpl implements MemberQuery{
 
     @Override
     public String getMember(Member member) {
-        return "SELECT id" +
+        return "SELECT id, member_idx" +
                 " FROM member" +
                 " WHERE id ='"+member.getId()+"' AND pw = '"+member.getPw()+"'";
     }

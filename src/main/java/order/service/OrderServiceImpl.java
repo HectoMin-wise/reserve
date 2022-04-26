@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class OrderServiceImpl implements OrderService {
@@ -24,35 +26,6 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Member memberLogin() throws SQLException {
-        Scanner sc = new Scanner(System.in);
-//        System.out.println("아이디 : ");
-//        String id = sc.nextLine();
-//        System.out.println("비밀번호 :");
-//        String pw = sc.nextLine();
-
-
-        while (true) {
-            System.out.println("예약 : 1 | 취소 : 2 | 끝내기 : 3 | 조회 : 4");
-            int choice = sc.nextInt();
-
-            if (choice == 1) {
-//                orderSave(member);
-            } else if (choice == 2) {
-                orderdelete(order);
-            } else if (choice==3){
-                break;
-            } else if (choice==4){
-                orderCheck();
-            }
-        }
-        return null;
-//        return new Member(seq++,id, pw);
-    }
-
-
-
-    @Override
     public Order orderSave(Member member,Order order) {
 
         order = new Order(0,order.getOrder_date(),"0","0",order.getOrder_price(),1,1);
@@ -60,11 +33,12 @@ public class OrderServiceImpl implements OrderService {
         PreparedStatement pstmt = null;
         conn = dbConnection.getConnection();
         try {
-            String sql = "INSERT INTO order_r(order_date,order_price) VALUES(?,?)";
+            String sql = "INSERT INTO order_r(order_date,order_price,member_idx) VALUES(?,?,?)";
 
             pstmt =conn.prepareStatement(sql);
             pstmt.setString(1,order.getOrder_date());
             pstmt.setInt(2,order.getOrder_price());
+            pstmt.setLong(3,member.getMemberIdx());
             pstmt.executeUpdate();
             System.out.printf(order.getOrder_date());
 
@@ -81,23 +55,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order orderdelete(Order order) {
+    public boolean orderdelete(int index) {
         PreparedStatement pstmt = null;
+        boolean deleteCheck = false;
         try {
             conn = dbConnection.getConnection();
-
-            System.out.println("연결성공");
-            Scanner sc = new Scanner(System.in);
-            System.out.println("없애고 싶은 번호");
-
             String sql = "delete from order_r where order_idx=?";
             pstmt =conn.prepareStatement(sql);
-
-            int del_num = sc.nextInt();
-            pstmt.setLong(1,del_num);
-
-            pstmt.executeUpdate();
-
+            pstmt.setLong(1,index);
+            deleteCheck = 1==pstmt.executeUpdate();
             conn.close();
             pstmt.close();
 
@@ -109,42 +75,40 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
 
         }
-        return order;
+        return deleteCheck;
     }
 
     @Override
-    public void orderCheck() {
+    public List<Order> orderCheck() {
+        List<Order> orders = new ArrayList<>();
+        Order order;
         PreparedStatement pstmt = null;
         ResultSet result = null;
         Scanner sc = new Scanner(System.in);
         try {
             conn = dbConnection.getConnection();
+//            String sql = "select order_idx, order_date, order_ from order_r JOIN ";
 
-       ;
-
-//            String sql = "select * from order_r";
             String sql = "     SELECT" +
                     "            or2.order_idx, or2.order_date, or2.order_price, h.house_name" +
                     "            FROM order_r or2" +
-                    "            JOIN reservation r ON or2.reservation_idx = r.reservation_idx" +
-                    "            join house h ON r.house_idx = h.house_idx" +
-                    "            where or2.member_idx = ?";
+                    "            LEFT JOIN reservation r ON or2.reservation_idx = r.reservation_idx" +
+                    "            LEFT JOIN house h ON r.house_idx = h.house_idx" +
+                    "            WHERE or2.member_idx = ?";
 
             pstmt =conn.prepareStatement(sql);
 
-            System.out.println("값넣어라");
-            int num = sc.nextInt();
-            pstmt.setInt(1,num);
+            pstmt.setInt(1,1);
 
 
             result = pstmt.executeQuery();
 
             while (result.next()){
-                System.out.println(result.getString("order_idx") +","
-                        +result.getString("order_date")+","
-                        +result.getString("order_price"));
-
-
+                order = new Order();
+                order.setOrder_idx(result.getInt("order_idx"));
+                order.setOrder_date(result.getString("order_date"));
+                order.setOrder_price(result.getInt("order_price"));
+                orders.add(order);
             }
             conn.close();
             pstmt.close();
@@ -158,7 +122,9 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
 
         }
+        return orders;
     }
+
 
 
 }

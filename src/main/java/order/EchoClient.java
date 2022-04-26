@@ -51,9 +51,9 @@ public class EchoClient {
 
         OrderService orderService = new OrderServiceImpl();
 
-        Member member = orderService.strat();
-
-
+        Member member = orderService.start();
+        pw.println(member.getMember_idx()+ " | " +member.getJoin_date());
+        pw.flush();
 
 //		4) 사용자의 입력한 데이터를 서버로 전송하고,
 //		   서버가 echo한 데이터를 수신해서 콘솔에 보여준다.

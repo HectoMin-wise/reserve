@@ -1,5 +1,6 @@
 package order;
 
+import order.entity.Order;
 import order.service.OrderServiceImpl;
 import vo.Member;
 import order.service.OrderService;
@@ -51,8 +52,9 @@ public class EchoClient {
 
         OrderService orderService = new OrderServiceImpl();
 
-        Member member = orderService.start();
-        pw.println(member.getMember_idx()+ " | " +member.getJoin_date());
+        Member member = orderService.memberLogin();
+
+//        pw.println(member.getMember_idx()+ " | " +member.getJoin_date());
         pw.flush();
 
 //		4) 사용자의 입력한 데이터를 서버로 전송하고,

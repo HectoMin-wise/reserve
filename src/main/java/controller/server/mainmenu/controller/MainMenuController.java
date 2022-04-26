@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 
@@ -17,6 +19,7 @@ public class MainMenuController {
     static private MenuImpl menu = new MenuImpl();
 
     private PrintWriter pw;
+    private BufferedReader br;
 
     // TODO: 2022-04-25 show*도 따로 빼줄것!
 
@@ -32,5 +35,41 @@ public class MainMenuController {
         sb.append(SETCLIENT);
         pw.println(sb);
         pw.flush();
+    }
+    public void showReserveMenuIn() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        boolean exit = false;
+        String line;
+        while (!exit){
+            sb = menu.showBanner().append(menu.showReserveMenuIN());
+            sb.append(SETCLIENT);
+            pw.println(sb);
+            pw.flush();
+
+//            TODO 내부 이동작동 붙혀주기
+            line = br.readLine();
+
+            if (line.equals("3")){
+                exit = true;
+            }
+        }
+    }
+    public void showHouseMenu() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        boolean exit = false;
+        String line;
+        while (!exit){
+            sb = menu.showBanner().append(menu.showHouseMenu());
+            sb.append(SETCLIENT);
+            pw.println(sb);
+            pw.flush();
+
+//            TODO 내부 이동작동 붙혀주기
+            line = br.readLine();
+
+            if (line.equals("3")){
+                exit = true;
+            }
+        }
     }
 }

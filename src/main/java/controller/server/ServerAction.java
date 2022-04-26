@@ -38,22 +38,21 @@ class ServerAction extends Thread {
             BufferedReader br = new BufferedReader(inR);
 
             MemberController memberController = new MemberController(pw,br,0);
-            MainMenuController mainMenuController = new MainMenuController(pw);
+            MainMenuController mainMenuController = new MainMenuController(pw,br);
             member.setId(IDKEY);
 
             while (true) {
                 if (!member.getId().isEmpty() && !member.getId().equals(IDKEY)) {
 //                    TODO 2번 째 메뉴 작업.
-                    System.out.println("로그인 후 메뉴들"+member.getId());
                     mainMenuController.showReserveMenu(member);
                     String line = br.readLine();
 //                    TODO 내부 선택지에 따른 동작 잡아주기
                     switch (line) {
                         case "1":
-
+                            mainMenuController.showReserveMenuIn();
                             break;
                         case "2":
-                           
+                            mainMenuController.showHouseMenu();
                             break;
                         case "3":
                             member.setId(IDKEY);

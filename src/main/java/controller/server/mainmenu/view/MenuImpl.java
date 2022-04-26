@@ -5,10 +5,24 @@ import controller.server.member.entity.Member;
 
 public class MenuImpl implements Menu {
     @Override
+    public StringBuilder showReserveMenuIN() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("1번 예약목록 조회 \n2번 예약취소\n3번 뒤로가기");
+        return sb;
+    }
+
+    @Override
     public StringBuilder showReserveMenu(Member member) {
         StringBuilder sb = new StringBuilder();
         sb.append("환영합니다.! "+member.getId()+" 회원님 메뉴를 선택해 주세요.!\n");
         sb.append("1번 예약관리 \n2번 숙소찾기\n3번 로그아웃");
+        return sb;
+    }
+
+    @Override
+    public StringBuilder showHouseMenu() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("1번 숙소목록 조회 \n2번 숙소상세\n3번 숙소 예약하기");
         return sb;
     }
 

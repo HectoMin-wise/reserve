@@ -3,13 +3,13 @@ package admin.member.dao;
 import admin.member.MemberState;
 import admin.member.dto.MemberDto;
 import admin.member.entity.Member;
-import admin.member.querycontroller.QueryController;
+import admin.member.querycontroller.MemberQuery;
 
 import java.util.List;
 
 public class MemberDaoImpl implements MemberDao {
 
-    private QueryController qc = new QueryController();
+    private MemberQuery mq = new MemberQuery();
 
     @Override
     public Long insertMember(Member member) {
@@ -18,32 +18,32 @@ public class MemberDaoImpl implements MemberDao {
 
     @Override
     public List<MemberDto> getMemberList(int page) {
-        return qc.selectMemberList(page);
+        return mq.selectMemberList(page);
     }
 
     @Override
     public MemberDto getMember(int memberIdx) {
-        return qc.selectMember(memberIdx);
+        return mq.selectMember(memberIdx);
     }
 
     @Override
     public void deleteMember(int memberIdx) {
-        qc.updateMemberState(memberIdx, MemberState.DELETE.getStateCode());
+        mq.updateMemberState(memberIdx, MemberState.DELETE.getStateCode());
     }
 
     @Override
     public void blockMember(int memberIdx) {
-        qc.updateMemberState(memberIdx, MemberState.BLOCK.getStateCode());
+        mq.updateMemberState(memberIdx, MemberState.BLOCK.getStateCode());
     }
 
     @Override
     public void usingMember(int memberIdx) {
-        qc.updateMemberState(memberIdx, MemberState.USING.getStateCode());
+        mq.updateMemberState(memberIdx, MemberState.USING.getStateCode());
     }
 
     @Override
     public void outMember(int memberIdx) {
-        qc.updateMemberState(memberIdx, MemberState.OUT.getStateCode());
+        mq.updateMemberState(memberIdx, MemberState.OUT.getStateCode());
     }
 
 

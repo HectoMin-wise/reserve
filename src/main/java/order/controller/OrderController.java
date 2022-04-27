@@ -26,8 +26,8 @@ public class OrderController {
     private PrintWriter pw;
     private BufferedReader br;
 
-    public void reserveList(){
-        List<Order> orders = orderService.orderCheck();
+    public void reserveList(Member member){
+        List<Order> orders = orderService.orderCheck(member);
         StringBuilder sb = new StringBuilder();
         for (Order order1: orders) {
             sb.append(orderMenu.showResevreList(order1));

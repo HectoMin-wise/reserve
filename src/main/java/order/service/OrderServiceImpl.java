@@ -20,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
     public Order order;
     int seq =1;
 
-    private DBConnection dbConnection = DBConfig.getDbInstance();
+    private final DBConnection dbConnection = DBConfig.getDbInstance();
     private Connection conn;
 
 
@@ -79,12 +79,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> orderCheck() {
+    public List<Order> orderCheck(Member member) {
         List<Order> orders = new ArrayList<>();
         Order order;
         PreparedStatement pstmt = null;
         ResultSet result = null;
-        Scanner sc = new Scanner(System.in);
         try {
             conn = dbConnection.getConnection();
 //            String sql = "select order_idx, order_date, order_ from order_r JOIN ";
@@ -97,10 +96,7 @@ public class OrderServiceImpl implements OrderService {
                     "            WHERE or2.member_idx = ?";
 
             pstmt =conn.prepareStatement(sql);
-
-            pstmt.setInt(1,1);
-
-
+            pstmt.setLong(1,member.getMemberIdx());
             result = pstmt.executeQuery();
 
             while (result.next()){
@@ -112,8 +108,6 @@ public class OrderServiceImpl implements OrderService {
             }
             conn.close();
             pstmt.close();
-//            sc.close();
-
         } catch (SQLException e) {
             System.out.println("DB 연결 실패 무언가 잘못됬다.. 드라이버 연결 정보 오류");
             e.printStackTrace();

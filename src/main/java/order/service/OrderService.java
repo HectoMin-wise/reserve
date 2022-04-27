@@ -12,7 +12,7 @@ public interface OrderService {
 
     Order orderSave(Member member,Order order);
     boolean orderdelete(int index);
-    List<Order> orderCheck();
+    List<Order> orderCheck(Member member);
 
 
 }

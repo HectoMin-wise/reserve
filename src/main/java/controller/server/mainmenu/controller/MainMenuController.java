@@ -54,7 +54,7 @@ public class MainMenuController {
 //            TODO 내부 이동작동 붙혀주기
             switch (line){
                 case "1":
-                   orderController.reserveList();
+                   orderController.reserveList(member);
                     break;
                 case "2":
                     orderController.reserveDelete();

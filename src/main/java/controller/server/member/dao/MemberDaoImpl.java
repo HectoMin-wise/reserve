@@ -1,9 +1,11 @@
 package controller.server.member.dao;
 
-import controller.server.DbConnection;
 import controller.server.member.entity.Member;
 import controller.server.member.querycontroller.MemberQueryImpl;
+import db.DBConfig;
+import db.DBConnection;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,14 +15,19 @@ import java.util.List;
 public class MemberDaoImpl implements MemberDao{
     // TODO: 2022-04-25 sql 문자열 입력 받는 장소
     static MemberQueryImpl memberQuery = new MemberQueryImpl();
-    static DbConnection dbConnection = new DbConnection();
+    private DBConnection dbConnection = DBConfig.getDbInstance();
+    private Connection con;
     @Override
     public Long insertMember(Member member) {
         System.out.println("호출 체크 DAO");
         try {
-            Statement statement = dbConnection.getCon().createStatement();
-            System.out.println(memberQuery.insertMember(member));
-            return Long.valueOf(statement.executeUpdate(memberQuery.insertMember(member)));
+            Long aLong;
+            con = dbConnection.getConnection();
+            Statement statement = con.createStatement();
+            aLong = Long.valueOf(statement.executeUpdate(memberQuery.insertMember(member)));
+            statement.close();
+            con.close();
+            return aLong;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,7 +40,8 @@ public class MemberDaoImpl implements MemberDao{
     public List<Member> getMemberList(int page) {
         List<Member> memberList = new ArrayList<>();
         try {
-            Statement statement = dbConnection.getCon().createStatement();
+            con = dbConnection.getConnection();
+            Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(memberQuery.getMemberList());
             while (rs.next()){
                 Member member = new Member();
@@ -49,10 +57,13 @@ public class MemberDaoImpl implements MemberDao{
 //                System.out.println(member);
                 memberList.add(member);
             }
-
+            rs.close();
+            statement.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return memberList;
     }
 
@@ -61,10 +72,15 @@ public class MemberDaoImpl implements MemberDao{
         Member member1 = new Member();
         Statement statement = null;
         try {
-            statement = dbConnection.getCon().createStatement();
+            con = dbConnection.getConnection();
+            statement = con.createStatement();
             ResultSet rs = statement.executeQuery(memberQuery.getMember(member));
-            rs.next();
-            member1.setId(rs.getString(1));
+            if (rs.next()) {
+                member1.setId(rs.getString(1));
+                member1.setMemberIdx(rs.getLong(2));
+            }
+            statement.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,17 +1,16 @@
 package controller.server;
 
-
-import vo.User;
-
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class Server {
+	private static Logger log = LoggerFactory.getLogger(Server.class);
 	private final static int PORT = 9010;
-	public static  List<User> caseDate;
 	public static void main(String[] args) throws IOException {
 		ServerSocket serverSocket = new ServerSocket(PORT);
 		while (true){

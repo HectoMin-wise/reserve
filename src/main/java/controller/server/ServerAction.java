@@ -11,7 +11,6 @@ import java.net.Socket;
 import java.sql.SQLException;
 
 class ServerAction extends Thread {
-    public static final String DB = "User.txt";
     public static final String IDKEY = "NOTLOGIN";
     private Socket socket;
     private InetAddress inetAddr;
@@ -25,9 +24,6 @@ class ServerAction extends Thread {
     @Override
     public void run() {
         try {
-            OutputStream outfile = new FileOutputStream(DB, true);
-            BufferedOutputStream bFOut = new BufferedOutputStream(outfile);
-            PrintWriter pwF = new PrintWriter(bFOut);
 
             OutputStream out = socket.getOutputStream();
             OutputStreamWriter outW = new OutputStreamWriter(out);
@@ -38,22 +34,21 @@ class ServerAction extends Thread {
             BufferedReader br = new BufferedReader(inR);
 
             MemberController memberController = new MemberController(pw,br,0);
-            MainMenuController mainMenuController = new MainMenuController(pw);
+            MainMenuController mainMenuController = new MainMenuController(pw,br);
             member.setId(IDKEY);
 
             while (true) {
                 if (!member.getId().isEmpty() && !member.getId().equals(IDKEY)) {
 //                    TODO 2번 째 메뉴 작업.
-                    System.out.println("로그인 후 메뉴들"+member.getId());
                     mainMenuController.showReserveMenu(member);
                     String line = br.readLine();
 //                    TODO 내부 선택지에 따른 동작 잡아주기
                     switch (line) {
                         case "1":
-
+                            mainMenuController.showReserveMenuIn(member);
                             break;
                         case "2":
-                           
+                            mainMenuController.showHouseMenu(member);
                             break;
                         case "3":
                             member.setId(IDKEY);
@@ -73,7 +68,6 @@ class ServerAction extends Thread {
                     switch (line) {
                         case "1":
                             memberController.joinMember(br, line);
-                            System.out.println("누군가의 가입!");
                             break;
                         case "2":
                             member = memberController.loginMember(br, line);

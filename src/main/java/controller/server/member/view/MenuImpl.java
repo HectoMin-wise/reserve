@@ -2,8 +2,6 @@ package controller.server.member.view;
 
 import controller.server.member.entity.Member;
 
-import java.util.List;
-
 public class MenuImpl implements Menu{
 
     @Override

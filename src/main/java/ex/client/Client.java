@@ -27,14 +27,11 @@ public class Client {
                 break;
             }
             if (dataSend.equals("DATA_SET")) {
-//                System.out.println("데이터 준비");
                 String sendData = sc.nextLine();
-//                System.out.println(sendData);
                 pw.println(sendData);
                 pw.flush();
             }
             System.out.println(dataSend);
         }
     }
-
 }

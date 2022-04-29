@@ -1,83 +1,47 @@
 package order.service;
 
-import admin.notice.querycontroller.QueryController;
+import controller.server.member.entity.Member;
+import db.DBConfig;
 import db.DBConnection;
 import db.Ojdbc;
 import order.entity.Order;
-import vo.Member;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class OrderServiceImpl implements OrderService {
 
-    public  Member member;
+    public Member member;
     public Order order;
     int seq =1;
 
-    private DBConnection dbConnection = new Ojdbc();
+    private final DBConnection dbConnection = DBConfig.getDbInstance();
     private Connection conn;
 
-    public Member strat() throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("아이디 : ");
-        String id = sc.nextLine();
-        System.out.println("비밀번호 :");
-        String pw = sc.nextLine();
 
 
-        while (true) {
-            System.out.println("예약 : 1 | 취소 : 2 | 끝내기 : 3");
-            int choice = sc.nextInt();
-
-            if (choice == 1) {
-                reserve(member);
-            } else if (choice == 2) {
-                cancle(order);
-            } else {
-                break;
-            }
-        }
-        return new Member(seq++,id, pw);
-    }
-
-    public static Connection dbConn;
     @Override
-    public void reserve(Member member) throws SQLException {
-        Scanner sc = new Scanner(System.in);
+    public Order orderSave(Member member,Order order) {
 
-        System.out.println("예약 날짜를 선택해 주세요");
-        String order_date = sc.nextLine();
-//        String cancle_date = sc.nextLine();
-//        String order_state= sc.nextLine();
-        System.out.println("가격을 적어주세요");
-        int order_price = sc.nextInt();
+        order = new Order(0,order.getOrder_date(),"0","0",order.getOrder_price(),1,1);
 
-//        OrderService order = new OrderService(member.getMember_idx(),order_date,order_price);
-        Order order = new Order(0,order_date,"0","0",order_price);
-        
         PreparedStatement pstmt = null;
+        conn = dbConnection.getConnection();
         try {
+            String sql = "INSERT INTO order_r(order_date,order_price,member_idx) VALUES(?,?,?)";
 
-            System.out.println("연결성공");
-
-
-            String sql = "insert INTO order_r VALUES("+"ORDER_R_IDX_SEQ.NEXTVAL"+",?,?,?,?)";
-//            System.out.println(member.getMember_idx()+" "+ member.getId());
-            conn = dbConnection.getConnection();
             pstmt =conn.prepareStatement(sql);
-//            pstmt.setInt(1,order.getOrder_idx());
             pstmt.setString(1,order.getOrder_date());
-            pstmt.setString(2,order.getOrder_date());
-            pstmt.setInt(3,1);
-            pstmt.setInt(4,order.getOrder_price());
-
-//            boolean result = pstmt.execute();
+            pstmt.setInt(2,order.getOrder_price());
+            pstmt.setLong(3,member.getMemberIdx());
             pstmt.executeUpdate();
-//            System.out.println("Result : "+result);
+            System.out.printf(order.getOrder_date());
+
             conn.close();
             pstmt.close();
         } catch (SQLException e) {
@@ -86,31 +50,20 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             System.out.println("별도의 사유로 연결 실패");
             e.printStackTrace();
-
         }
-
-
+        return order;
     }
-
 
     @Override
-    public void cancle(Order order) throws SQLException {
+    public boolean orderdelete(int index) {
         PreparedStatement pstmt = null;
+        boolean deleteCheck = false;
         try {
             conn = dbConnection.getConnection();
-
-            System.out.println("연결성공");
-            Scanner sc = new Scanner(System.in);
-            System.out.println("없애고 싶은 번호");
-            int del_num = sc.nextInt();
             String sql = "delete from order_r where order_idx=?";
-//            System.out.println(member.getMember_idx()+" "+ member.getId());
             pstmt =conn.prepareStatement(sql);
-
-            pstmt.setInt(1,del_num);
-
-            pstmt.executeUpdate();
-
+            pstmt.setLong(1,index);
+            deleteCheck = 1==pstmt.executeUpdate();
             conn.close();
             pstmt.close();
 
@@ -122,8 +75,50 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
 
         }
-
+        return deleteCheck;
     }
+
+    @Override
+    public List<Order> orderCheck(Member member) {
+        List<Order> orders = new ArrayList<>();
+        Order order;
+        PreparedStatement pstmt = null;
+        ResultSet result = null;
+        try {
+            conn = dbConnection.getConnection();
+//            String sql = "select order_idx, order_date, order_ from order_r JOIN ";
+
+            String sql = "     SELECT" +
+                    "            or2.order_idx, or2.order_date, or2.order_price, h.house_name" +
+                    "            FROM order_r or2" +
+                    "            LEFT JOIN reservation r ON or2.reservation_idx = r.reservation_idx" +
+                    "            LEFT JOIN house h ON r.house_idx = h.house_idx" +
+                    "            WHERE or2.member_idx = ?";
+
+            pstmt =conn.prepareStatement(sql);
+            pstmt.setLong(1,member.getMemberIdx());
+            result = pstmt.executeQuery();
+
+            while (result.next()){
+                order = new Order();
+                order.setOrder_idx(result.getInt("order_idx"));
+                order.setOrder_date(result.getString("order_date"));
+                order.setOrder_price(result.getInt("order_price"));
+                orders.add(order);
+            }
+            conn.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            System.out.println("DB 연결 실패 무언가 잘못됬다.. 드라이버 연결 정보 오류");
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("별도의 사유로 연결 실패");
+            e.printStackTrace();
+
+        }
+        return orders;
+    }
+
 
 
 }

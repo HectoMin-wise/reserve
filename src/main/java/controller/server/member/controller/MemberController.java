@@ -2,7 +2,6 @@ package controller.server.member.controller;
 
 import controller.server.member.entity.Member;
 import controller.server.member.service.MemberServiceImpl;
-import controller.server.member.view.Menu;
 import controller.server.member.view.MenuImpl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +10,6 @@ import lombok.NoArgsConstructor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -56,6 +53,7 @@ public class MemberController {
             line = br.readLine();
             if(line.equals("exit")) {
                 showLoginForm(100);
+                member.setId("NOTLOGIN");
                 loginSuccess=true;
             }
             switch (step) {
@@ -67,7 +65,8 @@ public class MemberController {
                     step--;
                     member.setPw(line);
                     try {
-                        loginSuccess = memberService.getMember(member).getId().equals(member.getId()) ? true : false;
+                        member = memberService.getMember(member);
+                        loginSuccess = member.getId().equals(member.getId()) ? true : false;
                     }catch (Exception e)
                     {
                         loginSuccess=false;

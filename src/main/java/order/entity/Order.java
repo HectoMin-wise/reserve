@@ -13,6 +13,7 @@ public class Order {
     String cancle_date;
     String order_state;
     int order_price;
-
+    int reservation_idx;
+    int member_idx;
 
 }

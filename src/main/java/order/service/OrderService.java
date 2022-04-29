@@ -1,13 +1,18 @@
 package order.service;
 
+import controller.server.member.entity.Member;
 import order.entity.Order;
-import vo.Member;
+
+
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface OrderService {
-    void reserve(Member member) throws SQLException;
-    void cancle(Order order) throws SQLException;
 
-    Member strat() throws SQLException;
+    Order orderSave(Member member,Order order);
+    boolean orderdelete(int index);
+    List<Order> orderCheck(Member member);
+
+
 }

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalTime;
 
 @Slf4j
 public class MariaJdbc implements DBConnection {
@@ -23,7 +24,8 @@ public class MariaJdbc implements DBConnection {
         Connection conn = null;
         
         try {
-            logger.info("DB Connect Start");
+            logger.info(LocalTime.now() +" DB Connect Start");
+            logger.warn("아무튼 위험함");
 
             Class.forName("org.mariadb.jdbc.Driver");
             String url = "jdbc:mariadb://"+SERVER_IP+":"+PORT+"/"+NAME;

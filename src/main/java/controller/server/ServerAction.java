@@ -68,7 +68,6 @@ class ServerAction extends Thread {
                     switch (line) {
                         case "1":
                             memberController.joinMember(br, line);
-                            System.out.println("누군가의 가입!");
                             break;
                         case "2":
                             member = memberController.loginMember(br, line);

@@ -2,7 +2,7 @@ package controller.server.member.controller;
 
 import controller.server.member.entity.Member;
 import controller.server.member.service.MemberServiceImpl;
-import controller.server.mainmenu.controller.view.MenuImpl;
+import controller.server.member.view.MenuImpl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

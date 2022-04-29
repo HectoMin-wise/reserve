@@ -24,7 +24,6 @@ public class MemberDaoImpl implements MemberDao{
             Long aLong;
             con = dbConnection.getConnection();
             Statement statement = con.createStatement();
-            System.out.println(memberQuery.insertMember(member));
             aLong = Long.valueOf(statement.executeUpdate(memberQuery.insertMember(member)));
             statement.close();
             con.close();
